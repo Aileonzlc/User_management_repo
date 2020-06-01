@@ -2,16 +2,19 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Aileon'
 
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from UserManagementBackend.UserManagementError import ConfigNotFoundError, ConfigFileError
-# from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 import json
 import logging
+import os
+
+from sqlalchemy import Column, Integer, String
+from sqlalchemy import ForeignKey
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from sqlalchemy.orm import sessionmaker
+
+from UserManagementBackend.UserManagementError import ConfigNotFoundError, ConfigFileError
+
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
 # model元类
@@ -54,8 +57,11 @@ class Auths(Base):
         return self.__repr__()
 
 
+path = os.path.dirname(__file__)
+logging.info(f'config.json path is {path}')
+
 try:
-    with open('config.json', 'r', encoding='utf-8') as f:
+    with open(f'{path}/config.json', 'r', encoding='utf-8') as f:
         config_data = json.load(f)
     mysql_user = config_data['user']
     mysql_pwd = config_data['password']
