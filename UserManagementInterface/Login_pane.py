@@ -1,12 +1,13 @@
 import sys
 from PyQt5.Qt import *
-from support_system.Login_read_txt import Ui_Form
+from UserManagementInterface.Login_read_txt import Ui_Form
 
 
 class Login(QWidget):
     show_register_signal = pyqtSignal()
     check_login_signal = pyqtSignal()
-    def __init__(self, parent = None, *args, **kwargs):
+
+    def __init__(self, parent=None, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
         self.ui = Ui_Form()
         self.ui.setupUi(self)
@@ -19,7 +20,7 @@ class Login(QWidget):
     def enable_login(self):
         user_name = self.ui.lineEdit_username.text()
         pwd = self.ui.lineEdit_pwd.text()
-        if len(user_name)>0 and len(pwd)>0:
+        if len(user_name) > 0 and len(pwd) > 0:
             self.ui.pushButton_login.setEnabled(True)
         else:
             self.ui.pushButton_login.setEnabled(False)

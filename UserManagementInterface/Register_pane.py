@@ -1,11 +1,12 @@
 import sys
 from PyQt5.Qt import *
-from support_system.register_save_as_txt import Ui_Form
+from UserManagementInterface.register_save_as_txt import Ui_Form
 
 
 class Regist(QWidget):
     exit_signal = pyqtSignal()
-    def __init__(self, parent = None, *args, **kwargs):
+
+    def __init__(self, parent=None, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
         self.ui = Ui_Form()
         self.ui.setupUi(self)
@@ -29,7 +30,7 @@ class Regist(QWidget):
         user_name = self.ui.lineEdit_username.text()
         pwd = self.ui.lineEdit_pwd.text()
         pwd_confirm = self.ui.lineEdit_pwd_confirm.text()
-        if len(user_name)>0 and len(pwd)>0 and pwd==pwd_confirm:
+        if len(user_name) > 0 and len(pwd) > 0 and pwd == pwd_confirm:
             self.ui.pushButton_regist.setEnabled(True)
         else:
             self.ui.pushButton_regist.setEnabled(False)
