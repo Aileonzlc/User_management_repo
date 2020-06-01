@@ -3,10 +3,10 @@
 __author__ = 'Aileon'
 
 from abc import ABCMeta, abstractmethod
-from UserManagement.UserORM import Users, Auths, Session
-from UserManagement.UserManagementError import RegisterPasswordError, UserExistError, IdentityDoesNotExistError
+from UserManagementBackend.UserORM import Users, Auths, Session
+from UserManagementBackend.UserManagementError import RegisterPasswordError, UserExistError, IdentityDoesNotExistError
 from sqlalchemy.orm.exc import NoResultFound
-from UserManagement.PasswordEncrypt import sha1_encrypt
+from UserManagementBackend.PasswordEncrypt import sha1_encrypt
 import logging
 
 

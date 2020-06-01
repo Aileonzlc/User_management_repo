@@ -3,11 +3,11 @@
 __author__ = 'Aileon'
 
 from abc import ABCMeta, abstractmethod
-from UserManagement.UserORM import Users, Session
+from UserManagementBackend.UserORM import Users, Session
 from sqlalchemy.orm.exc import NoResultFound
 import logging
-from UserManagement.UserManagementError import PasswordError, UserDoesNotExistError
-from UserManagement.PasswordEncrypt import sha1_encrypt
+from UserManagementBackend.UserManagementError import PasswordError, UserDoesNotExistError
+from UserManagementBackend.PasswordEncrypt import sha1_encrypt
 
 
 class Factory(metaclass=ABCMeta):
