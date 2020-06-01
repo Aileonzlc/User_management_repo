@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+__author__ = 'liangjh'
+
 import sys
 from PyQt5.Qt import *
 from UserManagementInterface.Login_pane import Login
