@@ -17,13 +17,26 @@ class Regist(QWidget):
         self.ui.pushButton_regist.clicked.connect(self.save_as_txt)
         self.show()
 
+    # -------------------修改的代码段------------------------
+    # def save_as_txt(self):
+    #     user_name = self.ui.lineEdit_username.text()
+    #     pwd = self.ui.lineEdit_pwd.text()
+    #     with open('user.txt', 'w') as f:
+    #         f.writelines(user_name + '\n')
+    #         f.writelines(pwd + '\n')
+    #     self.exit_signal.emit()
+
+    # 以上是源代码
+    # 以下是为了使用后端逻辑而修改的代码
+
     def save_as_txt(self):
-        user_name = self.ui.lineEdit_username.text()
-        pwd = self.ui.lineEdit_pwd.text()
-        with open('user.txt', 'w') as f:
-            f.writelines(user_name + '\n')
-            f.writelines(pwd + '\n')
+        user_name = self.ui.lineEdit_username.text()  # 注册用户名
+        pwd = self.ui.lineEdit_pwd.text()  # 注册密码
+        auth = self.ui.comboBox.currentText()  # 注册身份
+        auth_id = self.ui.lineEdit_auth_id.text()  # 注册该身份的权限密钥
+        QMessageBox.about(self, '提示', f'{user_name} 注册成功！')
         self.exit_signal.emit()
+    # ---------------------------------------------------------
 
     def enable_regist(self):
         auth_id = self.ui.lineEdit_auth_id.text()
