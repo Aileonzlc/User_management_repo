@@ -1,0 +1,12 @@
+{
+    "user": "root",
+    "password": "767872313",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "database": "test",
+    "encoding": "utf8",
+    "other": {
+        "author": "Aileon",
+        "version": 1.0
+    }
+}

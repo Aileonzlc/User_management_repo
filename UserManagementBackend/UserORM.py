@@ -8,7 +8,9 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from UserManagementBackend.UserManagementError import ConfigNotFoundError, ConfigFileError
 # from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
+import json
 import logging
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
@@ -53,8 +55,25 @@ class Auths(Base):
 
 
 try:
+    with open('config.json', 'r', encoding='utf-8') as f:
+        config_data = json.load(f)
+    mysql_user = config_data['user']
+    mysql_pwd = config_data['password']
+    mysql_host = config_data['host']
+    mysql_port = config_data['port']
+    mysql_db = config_data['database']
+    mysql_encoding = config_data['encoding']
+except FileNotFoundError as e:
+    logging.info(e)
+    raise ConfigNotFoundError('找不到config.json文件')
+except KeyError as e:
+    logging.info(e)
+    raise ConfigFileError('配置文件格式有误！')
+
+try:
     # 通过create_engine()可以连接数据库
-    engine = create_engine('mysql+pymysql://root:767872313@127.0.0.1:3306/test', encoding='utf8', echo=True)
+    engine = create_engine(f'mysql+pymysql://{mysql_user}:{mysql_pwd}@{mysql_host}:{mysql_port}/{mysql_db}',
+                           encoding=mysql_encoding, echo=True)
     # 使用Base类的metadata来创建表
     Base.metadata.create_all(engine)
 except RuntimeError as r:
