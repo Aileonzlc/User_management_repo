@@ -45,7 +45,8 @@ class Auths(Base):
 
     identity = Column(String(10), primary_key=True)
     authority = Column(Integer, nullable=False)
-    rg_password = Column(Integer, nullable=False)
+    # rg_password = Column(Integer, nullable=False)
+
     # Auths下有个users属性用于储存它对应的用户，多个user对应一个auth
     users = relationship("Users", order_by=Users.id, back_populates="auth")
 
@@ -97,4 +98,3 @@ if __name__ == "__main__":
     if user:
         logging.info(f'{user}')
         logging.info(f'{user.auth}')
-
