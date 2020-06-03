@@ -26,7 +26,7 @@ class Factory(metaclass=ABCMeta):
             # 提交事务
             session.commit()
             # 把值都存到新对象里
-            auth = Auths(identity=u.auth.identity, authority=u.auth.authority, rg_password=u.auth.rg_password)
+            auth = Auths(identity=u.auth.identity, authority=u.auth.authority)
             user = Users(id=u.id, name=u.name, password=u.password, remote_identity=u.remote_identity, auth=auth)
         except NoResultFound:
             raise UserDoesNotExistError('用户不存在！')
@@ -140,7 +140,7 @@ class LoginUser(Singleton):
 
 if __name__ == '__main__':
     # 测试代码
-    _user = LoginFactoryEncrypt().create_user('zz', '123')
+    _user = LoginFactoryEncrypt().create_user('z', '')
     login_user = LoginUser(_user)
     login_user.modify_name('aa')
-    login_user.modify_password('333')
+    login_user.modify_password('123')
