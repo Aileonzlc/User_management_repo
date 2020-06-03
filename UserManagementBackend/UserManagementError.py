@@ -95,7 +95,7 @@ class ConfigFileError(KeyError):
 
 
 class InputIsNoneError(Exception):
-    """自定义配置异常，输入有误"""
+    """自定义函数输入异常，输入有误"""
     def __init__(self, info='输入有误"！'):
         # 调用InputIsNoneError的init方法去完成自己的一个初始化
         Exception.__init__(self)
