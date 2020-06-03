@@ -105,3 +105,16 @@ class InputIsNoneError(Exception):
     def __str__(self):
         # 这个方法是为了支撑print语句，打印出用户自己定义的错误信息
         return f"InputIsNoneError:{self.error_info}"
+
+
+class UnknownInputTypeError(Exception):
+    """自定义函数输入异常，输入参数类型有误"""
+    def __init__(self, info='输入参数类型有误"！'):
+        # 调用InputIsNoneError的init方法去完成自己的一个初始化
+        Exception.__init__(self)
+        # 新添加了一个变量，用于自定义错误信息
+        self.error_info = info
+
+    def __str__(self):
+        # 这个方法是为了支撑print语句，打印出用户自己定义的错误信息
+        return f"UnknownInputTypeError:{self.error_info}"

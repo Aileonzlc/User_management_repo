@@ -52,4 +52,13 @@ print(sha.hexdigest(),len(sha.hexdigest()))
 #
 # print(json_data['s'])
 
-print(bin(65535))
+# print(bin(65535))
+
+from UserManagementBackend.UserORM import Session, Users, Auths
+s = set()
+s.add('root')
+s.add('zz')
+session = Session()
+query = session.query(Users).filter(Users.name.in_(s))
+user = query.all()
+print(user)
