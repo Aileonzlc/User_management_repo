@@ -4,7 +4,7 @@ __author__ = 'Aileon'
 
 from abc import ABCMeta, abstractmethod
 from UserManagementBackend.UserORM import Users, Auths, Session
-from UserManagementBackend.UserManagementError import UserExistError, IdentityDoesNotExistError
+from UserManagementBackend.UserManagementError import UserExistError, IdentityDoesNotExistError, InputIsNoneError
 from sqlalchemy.orm.exc import NoResultFound
 from UserManagementBackend.PasswordEncrypt import sha1_encrypt
 import logging
@@ -38,6 +38,13 @@ class RegisterFactory(metaclass=ABCMeta):
 
         # if not self.register_password_verify(identity, register_password):
         #     raise RegisterPasswordError('注册口令输入错误！')
+        # 判断输入是否正确
+        if name is None:
+            raise InputIsNoneError(f'用户名不能为空！')
+        if password is None:
+            raise InputIsNoneError('密码不能为空！')
+        if identity is None:
+            raise InputIsNoneError('用户身份不能为空！')
 
         if not self.identity_verify(identity):
             raise IdentityDoesNotExistError(f'身份 {identity} 不存在！')

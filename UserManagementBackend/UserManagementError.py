@@ -92,3 +92,16 @@ class ConfigFileError(KeyError):
     def __str__(self):
         # 这个方法是为了支撑print语句，打印出用户自己定义的错误信息
         return f"ConfigFileError:{self.error_info}"
+
+
+class InputIsNoneError(Exception):
+    """自定义配置异常，输入有误"""
+    def __init__(self, info='输入有误"！'):
+        # 调用InputIsNoneError的init方法去完成自己的一个初始化
+        Exception.__init__(self)
+        # 新添加了一个变量，用于自定义错误信息
+        self.error_info = info
+
+    def __str__(self):
+        # 这个方法是为了支撑print语句，打印出用户自己定义的错误信息
+        return f"InputIsNoneError:{self.error_info}"
