@@ -39,11 +39,11 @@ class RegisterFactory(metaclass=ABCMeta):
         # if not self.register_password_verify(identity, register_password):
         #     raise RegisterPasswordError('注册口令输入错误！')
         # 判断输入是否正确
-        if name is None:
+        if not name:
             raise InputIsNoneError(f'用户名不能为空！')
-        if password is None:
+        if not password:
             raise InputIsNoneError('密码不能为空！')
-        if identity is None:
+        if not identity:
             raise InputIsNoneError('用户身份不能为空！')
 
         if not self.identity_verify(identity):
@@ -138,4 +138,4 @@ class Register(RegisterFactory):
 
 if __name__ == "__main__":
     # 测试代码
-    new = Register().register('root', 'root123', '管理员')
+    new = Register().register('zz', '', '管理员')
