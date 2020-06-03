@@ -51,3 +51,5 @@ print(sha.hexdigest(),len(sha.hexdigest()))
 #     json_data = json.load(f)
 #
 # print(json_data['s'])
+
+print(bin(65535))

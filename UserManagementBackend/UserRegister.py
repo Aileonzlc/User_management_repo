@@ -131,4 +131,4 @@ class Register(RegisterFactory):
 
 if __name__ == "__main__":
     # 测试代码
-    new = Register().register('az', '123', '管理员', 1)
+    new = Register().register('root', 'root123', '管理员')
