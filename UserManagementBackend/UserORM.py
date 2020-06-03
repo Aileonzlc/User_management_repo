@@ -88,13 +88,17 @@ except RuntimeError as r:
     raise RuntimeError
 # 创建一个监听mysql服务的工厂类
 Session = sessionmaker(bind=engine)
-session = Session()
 
 
 if __name__ == "__main__":
     # 测试代码
+    session = Session()
     query = session.query(Users).filter(Users.name == 'zz')
-    user = query.one()
-    if user:
-        logging.info(f'{user}')
-        logging.info(f'{user.auth}')
+    try:
+        user = query.one()
+        if user:
+            logging.info(f'{user}')
+            logging.info(f'{user.auth}')
+    finally:
+        session.close()
+
