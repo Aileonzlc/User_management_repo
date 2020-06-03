@@ -23,7 +23,7 @@ class RegisterFactory(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def register_user(self, name: str, password: str, identity: str, register_password: int):
+    def register_user(self, name: str, password: str, identity: str, register_password: int) -> bool:
         # 调用orm的User的add函数添加新纪录
         pass
 
@@ -104,4 +104,4 @@ class Register(RegisterFactory):
 
 if __name__ == "__main__":
     # 测试代码
-    new = Register().register('cc', '123c', 'admin', 1)
+    new = Register().register('aa', '123', '管理员', 1)
