@@ -53,3 +53,8 @@ from UserManagementBackend.UserManagementError import *   # 导入
 UnknownInputTypeError  # 输入参数的类型有误
 UserDoesNotExistError  # 要删除的用户不存在
 """
+"""
+等待优化：
+1、不满足完整性约束会报sqlalchemy.exc.IntegrityError错误，可以使用这个错误来处理用户重名，外键不存在等情况，
+而不需要自己执行sql前判定。
+"""

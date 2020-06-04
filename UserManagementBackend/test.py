@@ -53,12 +53,14 @@ print(sha.hexdigest(),len(sha.hexdigest()))
 # print(json_data['s'])
 
 # print(bin(65535))
-
+# sqlalchemy.exc.IntegrityError   完整性错误，错误码1452是外键列输入的值不存在，错误代码1062是唯一键列的值重复
 from UserManagementBackend.UserORM import Session, Users, Auths
 s = set()
 s.add('root')
 s.add('zz')
 session = Session()
-query = session.query(Users).filter(Users.name.in_(s))
-user = query.all()
-print(user)
+new_user = Users(name='root', password='123', remote_identity='XX')
+session.add(new_user)
+session.commit()
+session.close()
+
