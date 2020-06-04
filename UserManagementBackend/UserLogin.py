@@ -23,9 +23,9 @@ class Factory(metaclass=ABCMeta):
         try:
             # 可能产生NoResultFound错误
             u = query.one()
-            # 提交事务
-            session.commit()
-            # 会话关闭之前初始化一下实例信息 print一下即可
+            # # 提交事务, 事务提交后会丢失查询
+            # session.commit()
+            # 会话关闭之前初始化一下实例信息 print一下即可，他会调用__str__,__str__会调用__repr__，repr执行时用self.name执行了查询，并将信息保存到属性里
             logging.info(f'one user found -> {u}, authority {u.auth}')
             # # 把值都存到新对象里
             # auth = Auths(identity=u.auth.identity, authority=u.auth.authority)
@@ -144,6 +144,6 @@ if __name__ == '__main__':
     # 测试代码
     _user = LoginFactoryEncrypt().create_user('root', 'root123')
     login_user = LoginUser(_user)
-    print(_user)
+    print(_user.auth)
     # login_user.modify_name('aa')
     # login_user.modify_password('123')

@@ -38,6 +38,15 @@ class Users(Base):
     def __str__(self):
         return self.__repr__()
 
+    def turn_to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'password': self.password,
+            'remote_identity': self.remote_identity,
+            'authority': self.auth.authority,
+                }
+
 
 class Auths(Base):
     """权限信息表"""
@@ -51,10 +60,17 @@ class Auths(Base):
     users = relationship("Users", order_by=Users.id, back_populates="auth")
 
     def __repr__(self):
-        return f"<Address(email_address='{self.identity}',authority='{self.authority}')>"
+        return f"<Auths(identity='{self.identity}',authority='{self.authority}')>"
 
     def __str__(self):
         return self.__repr__()
+
+    def turn_to_dict(self):
+        return {
+            'identity': self.identity,
+            'authority': self.authority,
+            'users': [u for u in self.users],
+                }
 
 
 path = os.path.dirname(__file__)
@@ -94,12 +110,13 @@ Session = sessionmaker(bind=engine)
 if __name__ == "__main__":
     # 测试代码
     session = Session()
-    query = session.query(Users).filter(Users.name == 'zz')
+    query = session.query(Users).filter(Users.name == 'root')
     try:
         user = query.one()
         if user:
             logging.info(f'{user}')
             logging.info(f'{user.auth}')
+        auth_dict = user.auth.turn_to_dict()
     finally:
         session.close()
-
+    print(auth_dict)
