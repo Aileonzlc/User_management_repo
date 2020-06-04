@@ -13,14 +13,21 @@ from abc import ABCMeta, abstractmethod
 class DeleteInterface(metaclass=ABCMeta):
     """删除接口"""
     @abstractmethod
+    def delete_set(self, name_set: set):
+        pass
+
+    @abstractmethod
+    def delete_single(self, name_set: set):
+        pass
+
+    @abstractmethod
     def delete(self, name):
         pass
 
 
 class Delete(DeleteInterface):
     """具体实现删除"""
-    @staticmethod
-    def delete_set(name_set: set):
+    def delete_set(self, name_set: set):
         # 避免对容器类型数据直接操作
         internal_name_set = copy.copy(name_set)
         logging.info(f'these users {internal_name_set} prepare to be deleted')
@@ -41,8 +48,7 @@ class Delete(DeleteInterface):
             # 关闭会话
             session.close()
 
-    @staticmethod
-    def delete_single(name: str):
+    def delete_single(self, name: str):
         logging.info(f'user {name} prepare to be deleted')
         session = Session()
         query = session.query(Users).filter(Users.name == name)
