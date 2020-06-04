@@ -7,9 +7,18 @@ from UserManagementBackend.UserORM import Users, Session
 from sqlalchemy.orm.exc import NoResultFound
 import logging
 import copy
+from abc import ABCMeta, abstractmethod
 
 
-class Delete:
+class DeleteInterface(metaclass=ABCMeta):
+    """删除接口"""
+    @abstractmethod
+    def delete(self, name):
+        pass
+
+
+class Delete(DeleteInterface):
+    """具体实现删除"""
     @staticmethod
     def delete_set(name_set: set):
         # 避免对容器类型数据直接操作
@@ -24,7 +33,7 @@ class Delete:
                 session.delete(user)
             if len(internal_name_set) != 0:
                 session.rollback()
-                logging.info(f'thest users {internal_name_set} do not exist, transaction has been rollbacked')
+                logging.info(f'these users {internal_name_set} do not exist, transaction has rolled back')
                 raise UserDoesNotExistError(f'这些用户不存在 {internal_name_set}')
             session.commit()
             logging.info(f'all users have been deleted')
