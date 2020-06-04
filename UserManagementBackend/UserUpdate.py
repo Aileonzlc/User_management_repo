@@ -50,6 +50,8 @@ class Update(UpdateInterface):
 
     def update(self, old_name: str, *, new_name: str = None, new_password: str = None, new_identity: str = None):
         logging.info(f'prepare to update user {old_name}, new information {new_name, new_password, new_identity}')
+        if all(map(lambda x: x is None, [new_name, new_password, new_identity])):
+            return
         session = Session()
         query = session.query(Users).filter(Users.name == old_name)
         try:
