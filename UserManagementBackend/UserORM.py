@@ -51,8 +51,7 @@ class Auths(Base):
     users = relationship("Users", order_by=Users.id, back_populates="auth")
 
     def __repr__(self):
-        return f"<Address(email_address='{self.identity}',authority='{self.authority}'" \
-               f",register password='{self.rg_password}')>"
+        return f"<Address(email_address='{self.identity}',authority='{self.authority}')>"
 
     def __str__(self):
         return self.__repr__()
@@ -80,7 +79,9 @@ except KeyError as e:
 try:
     # 通过create_engine()可以连接数据库
     engine = create_engine(f'mysql+pymysql://{mysql_user}:{mysql_pwd}@{mysql_host}:{mysql_port}/{mysql_db}',
-                           encoding=mysql_encoding, echo=True)
+                           encoding=mysql_encoding,
+                           # echo=True
+                           )
     # 使用Base类的metadata来创建表
     Base.metadata.create_all(engine)
 except RuntimeError as r:

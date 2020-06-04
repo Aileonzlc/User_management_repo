@@ -25,9 +25,11 @@ class Factory(metaclass=ABCMeta):
             u = query.one()
             # 提交事务
             session.commit()
-            # 把值都存到新对象里
-            auth = Auths(identity=u.auth.identity, authority=u.auth.authority)
-            user = Users(id=u.id, name=u.name, password=u.password, remote_identity=u.remote_identity, auth=auth)
+            # 会话关闭之前初始化一下实例信息 print一下即可
+            logging.info(f'one user found -> {u}, authority {u.auth}')
+            # # 把值都存到新对象里
+            # auth = Auths(identity=u.auth.identity, authority=u.auth.authority)
+            # user = Users(id=u.id, name=u.name, password=u.password, remote_identity=u.remote_identity, auth=auth)
         except NoResultFound:
             raise UserDoesNotExistError('用户不存在！')
         finally:
@@ -37,11 +39,11 @@ class Factory(metaclass=ABCMeta):
         # 获得user则用户存在，进一步校验密码
         if password is None:
             raise PasswordError('密码不能为空！')
-        if not self.password_verify(password, user.password):
+        if not self.password_verify(password, u.password):
             raise PasswordError('密码不正确！')
         # 密码校验通过，返回一个user对象
-        logging.info(f'login user -> {user.name}: {user}')
-        return user
+        logging.info(f'login user -> {u.name}: {u}')
+        return u
 
 
 class LoginFactorySimple(Factory):
@@ -140,7 +142,8 @@ class LoginUser(Singleton):
 
 if __name__ == '__main__':
     # 测试代码
-    _user = LoginFactoryEncrypt().create_user('z', '')
+    _user = LoginFactoryEncrypt().create_user('root', 'root123')
     login_user = LoginUser(_user)
-    login_user.modify_name('aa')
-    login_user.modify_password('123')
+    print(_user)
+    # login_user.modify_name('aa')
+    # login_user.modify_password('123')
