@@ -52,9 +52,19 @@ from UserManagementBackend.UserManagementError import *   # 导入
 可能产生的错误：
 UnknownInputTypeError  # 输入参数的类型有误
 UserDoesNotExistError  # 要删除的用户不存在
+
+4、更新功能
+from UserManagementBackend.UserUpdate import Update # 导入
+from UserManagementBackend.UserManagementError import *   # 导入
+Update().update(old_name=需要更新的用户名, new_name=新用户名, new_password=新密码，new_identity=新身份)  # 其中新用户名，新密码，新身份为选填参数，全不填则不会更新
+
+可能产生的错误：
+UserDoesNotExistError  # 需要更新的用户不存在
+IdentityDoesNotExistError  # 新的身份不存在
+UserExistError  # 新的用户名已存在，不能进行更新
 """
 """
 等待优化：
 1、不满足完整性约束会报sqlalchemy.exc.IntegrityError错误，可以使用这个错误来处理用户重名，外键不存在等情况，
-而不需要自己执行sql前判定。
+而不需要自己执行sql前判定。UserRegister, UserLogin, UserDelete, UserORM 均没有捕捉上述错误，而是多一次提前判定。
 """
