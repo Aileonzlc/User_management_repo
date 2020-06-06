@@ -4,6 +4,7 @@ __author__ = 'Aileon'
 
 from abc import ABCMeta, abstractmethod
 from UserManagementBackend.UserORM import Session, Users, Auths
+from UserManagementBackend.UserManagementError import UserDoesNotExistError
 import logging
 
 
@@ -38,9 +39,11 @@ class Query(QueryInterface):
         finally:
             session.close()
         logging.info(f'{len(users_list)} users were found')
+        if not users_list:
+            raise UserDoesNotExistError(f'查不到满足条件的用户！')
         return users_list
 
 
 if __name__ == "__main__":
-    urs = Query().query(identity='管理员', str_in_name='z')
+    urs = Query().query(identity='管理员', str_in_name='zx')
     print(urs)
