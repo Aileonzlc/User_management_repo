@@ -65,7 +65,7 @@ UserExistError  # 新的用户名已存在，不能进行更新
 
 5、查询功能
 from UserManagementBackend.UserQuery import Query # 导入
-urs = Query().query(identity=用户身份, str_in_name=用户名或用户名包含的字符串) # 返回一个列表，列表元素为字典，每个字典对应一个用户
+urs = Query().query(identity=用户身份, str_in_name=用户名包含的字符串) # 返回一个列表，列表元素为字典，每个字典对应一个用户
 字典的信息：{'name': 用户名, 'password': 用户密码, 'remote_identity': 用户身份, 'authority': 用户权限}
 
 可能产生的错误：
