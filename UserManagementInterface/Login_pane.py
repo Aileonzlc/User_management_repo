@@ -3,25 +3,23 @@ __author__ = 'liangjh'
 __helper__ = 'Aileon'
 
 import sys
-from PyQt5.Qt import *
-from UserManagementInterface.Login_read_txt import Ui_Form
+from PyQt5.Qt import QWidget, QApplication, pyqtSignal, QMessageBox
+from UserManagementInterface.Login_ui import Ui_Form_Login
 
 from UserManagementBackend.UserLogin import LoginFactoryEncrypt, LoginUser
 from UserManagementBackend.UserManagementError import PasswordError, UserDoesNotExistError, IdentityDoesNotExistError
 
 
 class Login(QWidget):
-    show_register_signal = pyqtSignal()
-    check_login_signal = pyqtSignal()
-
+    Login_signal = pyqtSignal()
     def __init__(self, parent=None, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
-        self.ui = Ui_Form()
+        self.ui = Ui_Form_Login()
         self.ui.setupUi(self)
         self.ui.lineEdit_username.textChanged.connect(self.enable_login)
         self.ui.lineEdit_pwd.textChanged.connect(self.enable_login)
         self.ui.pushButton_login.clicked.connect(self.verify_user_data)
-        self.ui.pushButton_regist.clicked.connect(self.show_register)
+        self.ui.pushButton_exit.clicked.connect(self.close)
         self.show()
 
     def enable_login(self):
@@ -54,6 +52,7 @@ class Login(QWidget):
         try:
             login_user = LoginUser(LoginFactoryEncrypt().create_user(user_name, pwd))
             QMessageBox.about(self, '提示', f'登录成功！您的权限为 {login_user.get_authority()}')
+            self.Login_signal.emit()
         except PasswordError as e:
             print(e)
             QMessageBox.about(self, '提示', '密码错误！')
@@ -65,8 +64,7 @@ class Login(QWidget):
             QMessageBox.about(self, '提示', '身份不存在！')
     # -------------------------------------------------------------------
 
-    def show_register(self):
-        self.show_register_signal.emit()
+
 
 
 if __name__ == '__main__':

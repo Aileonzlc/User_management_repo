@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="label_image">
+    <file>智能运行支持系统.png</file>
+  </qresource>
+</RCC>
