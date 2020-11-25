@@ -3,6 +3,11 @@
 __author__ = 'Aileon'
 
 """
+表user初始记录为
+用户名root
+密码root123
+"""
+"""
 依赖包:
 pip install cryptography; # 加密解密，连接mysql需要使用，否则可能报错
 pip install pymysql; # 连接mysql的api
